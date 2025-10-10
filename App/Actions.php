@@ -46,8 +46,8 @@ class Actions
         check_ajax_referer('pd_plugin_manager_nonce', 'nonce');
 
         $action = sanitize_text_field($_POST['plugin_action'] ?? '');
-        $plugin_repo = esc_url_raw($_POST['plugin_repo'] ?? '');
-        $plugin_file = sanitize_text_field($_POST['plugin_file'] ?? '');
+        $pluginRepoUrl = esc_url_raw($_POST['plugin_repo'] ?? '');
+        $pluginFile = sanitize_text_field($_POST['plugin_file'] ?? '');
 
         if (!$action) {
             wp_send_json_error('Niepoprawne dane');
@@ -62,7 +62,7 @@ class Actions
  
         switch ($action) {
             case 'install':
-                $zip_url = esc_url_raw($plugin_repo ?? '');
+                $zip_url = esc_url_raw($pluginRepoUrl ?? '');
                 if ($zip_url) {
                     $result = $upgrader->install($zip_url);
                 }
@@ -75,23 +75,23 @@ class Actions
                 break;
 
             case 'activate':
-                if (file_exists(WP_PLUGIN_DIR . '/' . $plugin_file)) {
-                    activate_plugin($plugin_file);
+                if (file_exists(WP_PLUGIN_DIR . '/' . $pluginFile)) {
+                    activate_plugin($pluginFile);
                     $status = "activated";
                 }
                 break;
 
             case 'deactivate':
-                if (is_plugin_active($plugin_file)) {
-                    deactivate_plugins($plugin_file);
+                if (is_plugin_active($pluginFile)) {
+                    deactivate_plugins($pluginFile);
                     $status = "deactived";
                 }
                 break;
 
             case 'uninstall':
-                $plugin_dir_path = WP_PLUGIN_DIR . '/' . dirname($plugin_file);
-                if (file_exists(WP_PLUGIN_DIR . '/' . $plugin_file)) {
-                    delete_plugins([$plugin_file]);
+                $plugin_dir_path = WP_PLUGIN_DIR . '/' . dirname($pluginFile);
+                if (file_exists(WP_PLUGIN_DIR . '/' . $pluginFile)) {
+                    delete_plugins([$pluginFile]);
                     $status = "uninstalled";
                 }
                 if (is_dir($plugin_dir_path)) {

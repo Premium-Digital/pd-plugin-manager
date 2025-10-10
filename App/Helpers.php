@@ -74,10 +74,10 @@ class Helpers
     		return $slug;
     	}
 
-    	foreach ( $plugins as $plugin_path => $data ) {
-    		$path_parts = explode( '/', $plugin_path );
-    		if ( $path_parts[0] === $slug ) {
-    			return WP_PLUGIN_DIR.'/'.$plugin_path;
+    	foreach ( $plugins as $pluginPath => $data ) {
+    		$pathParts = explode( '/', $pluginPath );
+    		if ( $pathParts[0] === $slug ) {
+    			return WP_PLUGIN_DIR.'/'.$pluginPath;
     		}
     	}
 
