@@ -3,7 +3,7 @@
 /**
  * Plugin Name: PD Plugin Manager
  * Description: Plugin manager for all PD's plugins.
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: kkarasiewicz
  */
 

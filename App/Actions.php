@@ -53,12 +53,17 @@ class Actions
             wp_send_json_error('Niepoprawne dane');
         }
 
-        include_once ABSPATH . 'wp-admin/includes/plugin.php';
-        include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+        require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+        require_once ABSPATH . 'wp-admin/includes/file.php';
+
+        global $wp_filesystem;
+        if (empty($wp_filesystem)) {
+            WP_Filesystem();
+        }
 
         $skin = new \WP_Ajax_Upgrader_Skin();
         $upgrader = new \Plugin_Upgrader($skin);
-        $wpFileSystem = new \WP_Filesystem_Base();
  
         switch ($action) {
             case 'install':
@@ -89,13 +94,14 @@ class Actions
                 break;
 
             case 'uninstall':
-                $plugin_dir_path = WP_PLUGIN_DIR . '/' . dirname($pluginFile);
+                $pluginDirPath = WP_PLUGIN_DIR . '/' . dirname($pluginFile);
                 if (file_exists(WP_PLUGIN_DIR . '/' . $pluginFile)) {
                     delete_plugins([$pluginFile]);
                     $status = "uninstalled";
                 }
-                if (is_dir($plugin_dir_path)) {
-                    $wpFileSystem->rmdir($plugin_dir_path, true);
+
+                if (is_dir($pluginDirPath) && $wp_filesystem->exists($pluginDirPath)) {
+                    $wp_filesystem->rmdir($pluginDirPath, true);
                 }
                 break;
 
