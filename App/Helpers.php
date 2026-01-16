@@ -36,6 +36,12 @@ class Helpers
                 'description' => 'A plugin that provides a variety of shortcodes to enhance content creation in WordPress.',
                 'repo' => 'https://github.com/Premium-Digital/pd-shortcodes/releases/latest/download/pd-shortcodes.zip'
             ],
+            [
+                'slug' => 'pd-coupons-planner',
+                'name' => 'PD Coupons Planner',
+                'description' => 'A plugin to help manage and plan coupon campaigns effectively within WordPress.',
+                'repo' => 'https://github.com/Premium-Digital/pd-coupons-planner/releases/latest/download/pd-coupons-planner.zip'
+            ],
         ];
 
         $allPlugins = get_plugins();

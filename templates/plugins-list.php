@@ -1,16 +1,14 @@
 <div class="pd-plugin-manager">
     <h1 class="pd-plugin-manager__heading">PD Plugin Manager</h1>
-
     <div class="pd-plugin-manager__list">
         <?php foreach ($plugins as $plugin): 
             $status = !$plugin['installed'] ? 'Nie zainstalowany' : ($plugin['active'] ? 'Aktywny' : 'Nieaktywny');
-            $status_class = '';
+            $status_class = 'pd-plugin-card__status-value--inactive';
+
             if (!$plugin['installed']) {
                 $status_class = 'pd-plugin-card__status-value--not-installed';
             } elseif ($plugin['active']) {
                 $status_class = 'pd-plugin-card__status-value--active';
-            } else {
-                $status_class = 'pd-plugin-card__status-value--inactive';
             }
         ?>
         <div class="pd-plugin-card">
